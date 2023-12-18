@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     require "../templates/templates.php";
     require "../utils/base-location.php";
     mostrarHeader("Iniciar Sesión - Todo App", "login");
@@ -18,6 +20,20 @@
                 <input type="pass" name="pass" placeholder="Contraseña...">
             </label>
             <input type="submit" value="Ingresar">
+            <?php 
+                // esta función la uso para imprimir un h4 con el error a mostrar
+                function print_error($msg) {
+                    echo "<h4>Error! -> $msg</h4>";
+                }
+
+                if (isset($_SESSION["error"])) {
+                    echo "<div class='error-container'>";
+
+                    if ($_SESSION["error"] == "wrong_password")  print_error("La contraseña es incorrecta!");
+
+                    echo "</div>";
+                }
+            ?>
         </form>
         <h3>¿No tienes cuenta? <a href="<?= base_location()."/register" ?>" class="register-cta">Registrate Aquí</a></h3>
     </main>

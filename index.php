@@ -15,7 +15,6 @@ $method = $_SERVER["REQUEST_METHOD"];
 //url base del proyecto local
 $base_location = base_location();
 
-
 //configurando rutas
 if ($location == $base_location."/login" && $method == "GET") {
    header("Location: $base_location/private/views/login.php");
