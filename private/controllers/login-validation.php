@@ -12,13 +12,18 @@ $checkIfUserExists="SELECT nombre, clave FROM usuario where nombre = '$user' LIM
 
 $userExist = $conexion->query($checkIfUserExists)->fetch(PDO::FETCH_ASSOC);
 
-print_r($userExist);
 if ($userExist) {
     if ($pass != $userExist["clave"]) {
         $_SESSION["error"]="wrong_password";
         header("Location: ".base_location()."/login");
         exit();
     } 
+    $_SESSION["error"] = null;
     $_SESSION["logged"] = TRUE;
     header("Location:".base_location()."/todo");
-} 
+    exit();
+} else {
+    $_SESSION["error"]="user_dont_exists";
+    header("Location:".base_location()."/login");
+    exit();
+}

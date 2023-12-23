@@ -23,14 +23,14 @@
             <?php 
                 // esta función la uso para imprimir un h4 con el error a mostrar
                 function print_error($msg) {
-                    echo "<h4>Error! -> $msg</h4>";
+                    echo "<h4 class='error-msg'>Error: $msg</h4>";
                 }
 
                 if (isset($_SESSION["error"])) {
                     echo "<div class='error-container'>";
 
-                    if ($_SESSION["error"] == "wrong_password")  print_error("La contraseña es incorrecta!");
-
+                    if ($_SESSION["error"] == "wrong_password")  print_error("La contraseña es incorrecta.");
+                    if ($_SESSION["error"] == "user_dont_exists") print_error("El usuario ingresado no existe.");
                     echo "</div>";
                 }
             ?>
