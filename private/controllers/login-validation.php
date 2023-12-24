@@ -18,12 +18,12 @@ if ($userExist) {
         header("Location: ".base_location()."/login");
         exit();
     } 
-    $_SESSION["error"] = null;
+    $_SESSION["login_error"] = null;
     $_SESSION["logged"] = TRUE;
     header("Location:".base_location()."/todo");
     exit();
 } else {
-    $_SESSION["error"]="user_dont_exists";
+    $_SESSION["login_error"]="user_dont_exists";
     header("Location:".base_location()."/login");
     exit();
 }

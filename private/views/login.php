@@ -1,8 +1,9 @@
 <?php
-    session_start();
 
     require "../templates/templates.php";
     require "../utils/base-location.php";
+    require "../utils/print-error.php";
+
     mostrarHeader("Iniciar Sesión - Todo App", "login");
 ?>
     <header>
@@ -22,17 +23,20 @@
             <input type="submit" value="Ingresar">
             <?php 
                 // esta función la uso para imprimir un h4 con el error a mostrar
-                function print_error($msg) {
-                    echo "<h4 class='error-msg'>Error: $msg</h4>";
-                }
 
-                if (isset($_SESSION["error"])) {
+
+                if (isset($_SESSION["login_error"])) {
                     echo "<div class='error-container'>";
 
-                    if ($_SESSION["error"] == "wrong_password")  print_error("La contraseña es incorrecta.");
-                    if ($_SESSION["error"] == "user_dont_exists") print_error("El usuario ingresado no existe.");
+                    $login_error = $_SESSION["login_error"];
+
+                    if ($login_error == "wrong_password")  print_error("La contraseña es incorrecta.");
+                    if ($login_error == "user_dont_exists") print_error("El usuario ingresado no existe.");
+
                     echo "</div>";
                 }
+
+                $_SESSION["login_error"] = null;
             ?>
         </form>
         <h3>¿No tienes cuenta? <a href="<?= base_location()."/register" ?>" class="register-cta">Registrate Aquí</a></h3>
