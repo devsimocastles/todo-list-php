@@ -9,7 +9,7 @@ include "../db/connect.php";
 
 //=========== REGEX =============
 $invalid_user = "/[^A-Za-z0-9]/";
-$valid_password = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/";
+$valid_password = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!:%*?&])[A-Za-z\d@$:!%*?&]{8,}$/";
 //===============================
 
 
@@ -33,7 +33,20 @@ if (preg_match($invalid_user, $user) || preg_match($invalid_user, $confirm_user)
 if ($password == "" || $confirm_password == "") redirect("register", "empty_field");
 if ($password != $confirm_password) redirect("register","password_dont_match");
 if (strlen($password) < 8|| strlen($confirm_password) < 8) redirect("register", "password_invalid_length");
-if (preg_match($valid_password, $password) || preg_match($valid_password, $confirm_password)) redirect("register", "invalid_password");
-
+if (!preg_match($valid_password, $password) || !preg_match($valid_password, $confirm_password)) redirect("register", "invalid_password");
 //==========================================
 
+
+//========== SUBMITTED USERNAME VALIDATION IN DB ============
+$username_exists = "SELECT * FROM usuario WHERE nombre = '$user' LIMIT 1";
+$exists = $conexion->query($username_exists)->fetchAll();
+if (count($exists) == 1) redirect("register", "user_exists");
+//=====================================================
+
+
+//========== CREATE ACCOUNT ==============
+$create_account="INSERT INTO usuario (nombre, clave) VALUES ('$user', '$password')";
+$conexion->query($create_account);
+$_SESSION["signup_success"] = TRUE;
+redirect("register","");
+//===================================================
