@@ -21,6 +21,7 @@ if ($userExist) {
     } 
 
     $_SESSION["login_error"] = null;
+    // $_SESSION["user_id"] = ;
     $_SESSION["logged"] = TRUE;
     header("Location:".base_location()."/todo");
     exit();

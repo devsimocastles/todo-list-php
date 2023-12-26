@@ -4,8 +4,6 @@
     require "../utils/base-location.php";
     require "../utils/print-error.php";
 
-    
-    print_r($_SESSION);
 
     mostrarHeader("Iniciar Sesión - Todo App", "login");
 ?>
