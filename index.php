@@ -32,6 +32,11 @@ elseif ($location == $base_location."/todo" && $method == "GET") {
     exit();
 } 
 
+elseif ($location == $base_location."/logout" && $method == "GET") {
+    header("Location: $base_location/private/utils/logout.php");
+    exit();
+}
+
 
 
 // redirigir a login si el usuario no está logueado

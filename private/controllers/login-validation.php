@@ -12,12 +12,14 @@ $checkIfUserExists="SELECT nombre, clave FROM usuario where nombre = '$user' LIM
 
 $userExist = $conexion->query($checkIfUserExists)->fetch(PDO::FETCH_ASSOC);
 
+if ($user == "" || $pass == "") redirect_login("/login","empty_field");
+
 if ($userExist) {
+
     if ($pass != $userExist["clave"]) {
-        $_SESSION["error"]="wrong_password";
-        header("Location: ".base_location()."/login");
-        exit();
+        redirect_login("/login", "wrong_password");
     } 
+
     $_SESSION["login_error"] = null;
     $_SESSION["logged"] = TRUE;
     header("Location:".base_location()."/todo");

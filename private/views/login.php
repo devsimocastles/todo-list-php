@@ -4,6 +4,9 @@
     require "../utils/base-location.php";
     require "../utils/print-error.php";
 
+    
+    print_r($_SESSION);
+
     mostrarHeader("Iniciar Sesión - Todo App", "login");
 ?>
     <header>
@@ -18,7 +21,7 @@
             </label>
             <label>
                 Contraseña
-                <input type="pass" name="pass" placeholder="Contraseña...">
+                <input type="password" name="pass" placeholder="Contraseña...">
             </label>
             <input type="submit" value="Ingresar">
             <?php 
@@ -30,6 +33,7 @@
 
                     $login_error = $_SESSION["login_error"];
 
+                    if ($login_error == "empty_field") print_error("Los campos Usuario y Contraseña son obligatorios.");
                     if ($login_error == "wrong_password")  print_error("La contraseña es incorrecta.");
                     if ($login_error == "user_dont_exists") print_error("El usuario ingresado no existe.");
 

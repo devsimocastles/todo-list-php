@@ -12,3 +12,10 @@ function redirect($url, $error){
     header("Location: "."$location/$url");
     exit();
 };
+
+function redirect_login($url, $error){
+    $location = base_location();
+    $_SESSION["login_error"] = $error;
+    header("Location: "."$location/$url");
+    exit();
+};
