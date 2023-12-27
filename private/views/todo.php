@@ -51,6 +51,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Tarea</th>
+                    <th>Descripción</th>
                     <th>Estado</th>
                     <th>Acción</th>
                 </tr>
@@ -63,10 +64,12 @@
                     $id_tarea = $task["id_tarea"];
                     $nombre = $task["nombre"];
                     $completada = $task["completada"];
+                    $descripcion = $task["descripcion"];
                     ?>
                     <tr>
                         <td><?=$id_tarea?></td>
                         <td><?=$nombre?></td>
+                        <td><?=$descripcion?></td>
                         <td><?=$completada?></td>
                         <td>
                             <a href="../models/todo-handler.php?action=u&id=<?=$id_tarea?>">Editar</a>

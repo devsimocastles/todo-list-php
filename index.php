@@ -38,7 +38,6 @@ elseif ($location == $base_location."/logout" && $method == "GET") {
 }
 
 
-
 // redirigir a login si el usuario no está logueado
 if (!isset($_SESSION["logged"]) && $_SESSION["logged"] != TRUE) {
     header("Location: $base_location/login");
