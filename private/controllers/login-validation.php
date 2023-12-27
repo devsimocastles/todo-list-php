@@ -21,7 +21,11 @@ if ($userExist) {
     } 
 
     $_SESSION["login_error"] = null;
-    // $_SESSION["user_id"] = ;
+    // GETTING USER ID //////////////////
+    $get_id = "SELECT id_usuario FROM usuario WHERE nombre = '$user'";
+    $user_id = $conexion->query($get_id)->fetch()["id_usuario"];
+    $_SESSION["user_id"] = $user_id;
+    ////////////////////////////////////
     $_SESSION["logged"] = TRUE;
     header("Location:".base_location()."/todo");
     exit();

@@ -1,7 +1,7 @@
 <?php
 
 try{
-    $conexion = new PDO("mysql:host=localhost;dbname=todolist", "root","Ad_m1n*");
+    $conexion = new PDO("mysql:host=localhost;dbname=todolist", "root","");
 } catch (PDOException $e){
     echo $e->getMessage();
 }

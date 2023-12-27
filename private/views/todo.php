@@ -8,6 +8,8 @@
         redirect_login("login","");
     }
 
+    $user_id = $_SESSION["user_id"];
+
     mostrarHeader("ToDo Editor | ToDo App", "todo-editor");
 ?> 
 
@@ -33,11 +35,52 @@
     </label>
 </form>
     <?php
-
-        $get_tasks = "SELECT * FROM tarea WHERE "
-
-        $tasks = $conexion->query
-
+        $get_tasks = "SELECT * FROM tarea WHERE id_usuario = '$user_id'";
+        $task_count = $conexion->query($get_tasks)->rowCount();
+        // IF COUNT IS < 1 SHOW A MESSAGE///////////////////////
+        if ($task_count < 1) {
+    ?>
+        <h2>No hay ninguna tarea pendiente, ¡crea una!</h2>
+    <?php 
+        } 
+        ///////////////////////////////////////////////////////
+        else {
+    ?>  
+        <table class="task-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tarea</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <?php 
+                // ELSE, SHOW ALL TASKS IN THE TABLE////////////
+                $tasks = $conexion->query($get_tasks)->fetchAll(PDO::FETCH_ASSOC);
+              
+                foreach ($tasks as $task) {      
+                    $id_tarea = $task["id_tarea"];
+                    $nombre = $task["nombre"];
+                    $completada = $task["completada"];
+                    ?>
+                    <tr>
+                        <td><?=$id_tarea?></td>
+                        <td><?=$nombre?></td>
+                        <td><?=$completada?></td>
+                        <td>
+                            <a href="../models/todo-handler.php?action=u&id=<?=$id_tarea?>">Editar</a>
+                            <a href="../models/todo-handler.php?action=d&id=<?=$id_tarea?>">Eliminar</a>
+                        </td>
+                    </tr>
+            <?php 
+                }
+                ////////////////////////////////////////////////
+                ?>
+    
+        </table>
+    <?php 
+        }
     ?>
 </main>
 
