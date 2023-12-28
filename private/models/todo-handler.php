@@ -6,22 +6,51 @@ include ("../utils/print-error.php");
 include ("../templates/templates.php");
 
 
+
+$user_id = $_SESSION["user_id"];
+
+
+/// CREAR TAREA ////////////////////////////////////////////////////////////////////
+
+if ($_POST && isset($_POST["action"]) && $_POST["action"] == "create") {
+    $new_task_name = htmlspecialchars($_POST["task_name"]);  
+
+    if ($new_task_name == "") {
+        $_SESSION["create_error"] = "empty_field";
+        header("Location: ".base_location()."/todo");
+        exit();
+    }
+
+    $sql = "INSERT INTO tarea (nombre, completada, id_usuario,descripcion) VALUES ('$new_task_name', '0',".$user_id.",'')";
+    $query=$conexion->query($sql);
+    if ($query) header("Location:".base_location()."/todo");
+    exit();
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+
+
+
+//ELIMINAR TAREA ////////////////////////////////////////////////////////////////////////////////////////////
 $operation = $_GET["action"]; $id = $_GET["id"];
 
 $_SESSION["operation"] = $operation;
 $_SESSION["task_id"] = $id; 
 
-if ($operation == "d") {
+if ($operation == "delete") {
     $delete = "DELETE FROM tarea WHERE id_tarea = '$id'";
     $query = $conexion->query($delete);
     if ($query) header("Location:".base_location()."/todo");
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-if ($operation == "u") {
+
+
+// EDITAR TAREA ///////////////////////////////////////////////////////////////////////////////////////////
+if ($operation == "update") {
     mostrarHeader("Editar Tarea | ToDo App","task-editor");
 
-    $user_id = $_SESSION["user_id"];
-    $get_task_data = "SELECT * FROM tarea WHERE id_usuario = '$user_id'";
+    $get_task_data = "SELECT * FROM tarea WHERE id_tarea = ".$_SESSION['task_id'];
 
     $task_data = $conexion->query($get_task_data)->fetch(PDO::FETCH_ASSOC);
 
@@ -49,4 +78,22 @@ if ($operation == "u") {
 <?php 
     mostrarFooter();
 }
-?>
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// MARCAR COMO COMPLETADA //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+if ($operation=="check") {
+    // OBTENER EL ESTADO DE LA TAREA A MARCAR
+     $sql = "SELECT completada FROM tarea WHERE id_tarea = '$id'";
+     $is_task_complete = $conexion->query($sql)->fetch(PDO::FETCH_ASSOC)["completada"];
+     $completed;
+     ($is_task_complete) == "0" ? $completed="1" : $completed=="0";
+     
+     // CAMBIANDO EL ESTADO DE LA TAREA 
+     $conexion->query("UPDATE tarea SET completada = '$completed' WHERE id_tarea = '$id'");
+     header("Location:".base_location()."/todo");
+     exit();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

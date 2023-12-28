@@ -2,6 +2,7 @@
 
     include ("../utils/base-location.php");
     include ("../templates/templates.php");
+    include ("../utils/print-error.php");
     include ("../db/connect.php");
 
     if ($_SESSION["logged"] != TRUE) {
@@ -9,6 +10,9 @@
     }
 
     $user_id = $_SESSION["user_id"];
+
+    $get_tasks = "SELECT * FROM tarea WHERE id_usuario = '$user_id'";
+    $task_count = $conexion->query($get_tasks)->rowCount();
 
     mostrarHeader("ToDo Editor | ToDo App", "todo-editor");
 ?> 
@@ -20,32 +24,36 @@
             <li><a href="<?= base_location()."/logout"?>">Cerrar Sesión</a></li>
             <li><a href="<?= base_location()."/profile"?>">Mi cuenta</a></li>
         </ul>
-        <div class="profile-pic">
-            <img src="#" alt="Foto de Perfil">
-        </div>
     </nav>
 </header>
-<main>
-<form action="../models/todo-validation.php" method="post">
-    <label>
-        Crear Tarea
-        <input type="text" name="task_name" placeholder="Nombre de la tarea...">
-        <input type="hidden" name="action" value="create">
-        <input type="submit" value="Crear Tarea">
-    </label>
-</form>
-    <?php
-        $get_tasks = "SELECT * FROM tarea WHERE id_usuario = '$user_id'";
-        $task_count = $conexion->query($get_tasks)->rowCount();
-        // IF COUNT IS < 1 SHOW A MESSAGE///////////////////////
-        if ($task_count < 1) {
-    ?>
+<main>  
+    <!-- SI LA CANTIDAD DE TAREAS ES IGUAL A 10, MUESTRA EL MENSAJE DENTRO DEL H2 -->
+    <?php if ($task_count == 10) { ?>
+        <h2>Has alcanzado el límite de 10 tareas! Elimina alguna para crear otra!</h2>
+    <?php } else {?>
+    <!------------------------------------------------------------------------------------>
+    <!-- SI LA CANTIDAD DE TAREAS ES MENOR A 10, MUESTRA EL FORMULARIO PARA CREAR OTRAS -->
+        <form action="../models/todo-handler.php" method="post">
+            <label>
+                Crear Tarea
+                <input type="text" name="task_name" placeholder="Nombre de la tarea...">
+                <input type="hidden" name="action" value="create">
+                <input type="submit" value="Crear Tarea">
+            </label>
+            <?php 
+                if (isset($_SESSION["create_error"]) && $_SESSION["create_error"] == "empty_field") {
+                    print_error("El campo no puede estar vacío");
+                    $_SESSION["create_error"] = null;
+                }
+            ?>
+        </form>
+    <!------------------------------------------------------------------------------------>
+    <!-- SI LA CANTIDAD DE TAREAS ES MENOR A 1, MUESTRA EL MENSAJE -->
+    <?php } if ($task_count < 1) { ?>
         <h2>No hay ninguna tarea pendiente, ¡crea una!</h2>
-    <?php 
-        } 
-        ///////////////////////////////////////////////////////
-        else {
-    ?>  
+    <?php } else { ?>  
+    <!------------------------------------------------------------------------------------>
+    <!-- SI LA CANTIDAD DE TAREAS ES MAYOR A UNO, MUESTRA LA TABLA CON LAS TAREAS -->
         <table class="task-table">
             <thead>
                 <tr>
@@ -57,7 +65,6 @@
                 </tr>
             </thead>
             <?php 
-                // ELSE, SHOW ALL TASKS IN THE TABLE////////////
                 $tasks = $conexion->query($get_tasks)->fetchAll(PDO::FETCH_ASSOC);
               
                 foreach ($tasks as $task) {      
@@ -70,21 +77,20 @@
                         <td><?=$id_tarea?></td>
                         <td><?=$nombre?></td>
                         <td><?=$descripcion?></td>
-                        <td><?=$completada?></td>
+                        <td><?=($completada != "0") ? "Completada":"No Completada";?></td>
                         <td>
-                            <a href="../models/todo-handler.php?action=u&id=<?=$id_tarea?>">Editar</a>
-                            <a href="../models/todo-handler.php?action=d&id=<?=$id_tarea?>">Eliminar</a>
+                            <a href="../models/todo-handler.php?action=update&id=<?=$id_tarea?>">Editar</a>
+                            <a href="../models/todo-handler.php?action=delete&id=<?=$id_tarea?>">Eliminar</a>
+                            <a href="../models/todo-handler.php?action=check&id=<?=$id_tarea?>">Marcar/Desmarcar</a>
                         </td>
                     </tr>
             <?php 
                 }
-                ////////////////////////////////////////////////
                 ?>
     
         </table>
-    <?php 
-        }
-    ?>
+    <?php }?>
+        <!------------------------------------------------------------------------------------>
 </main>
 
 <?php 
