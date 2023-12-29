@@ -57,12 +57,12 @@
             $_SESSION["register_error"] = null;
             $_SESSION["signup_success"] = null;
         ?>
-    </form>
     <h3>¿Ya tienes cuenta? 
         <a href="<?= base_location()."/login"?>" class="login-cta">
             Ingresa a tu cuenta aquí
         </a>
     </h3>
+    </form>
 </main>
 
 <?php 

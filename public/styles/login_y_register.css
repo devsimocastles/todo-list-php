@@ -1,0 +1,56 @@
+body.login, body.register{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+body.login header, body.register header{
+    margin: 2em 0;
+    text-align: center;
+}
+
+body.login header h1, body.register header h1{
+    margin-bottom: .5em;
+}
+
+body.register form, body.login form, label{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+body.register form label, body.login form label, input{
+    margin: .5em 0;
+}
+
+body.login form label input, body.register form label input{
+    padding: 1em;
+    font-size: 18px;
+    font-family: "Roboto Mono", monospace;
+}
+
+body.login form input[type="submit"], body.register form input[type="submit"]{
+    padding: .5em 1em;
+    font-family: "Roboto Mono", monospace;
+}
+
+body.register form h3, body.login form h3{
+    margin-top: 1em;
+}
+
+body.register form h3 a, body.login form h3 a{
+   color: #ADB5BD;
+}
+
+body.register form h3 a:hover, body.login form h3 a:hover{
+   color: #343A40;
+} 
+
+.error-container{
+    padding: 1em;
+    color: #495057;
+    text-decoration: underline;
+}

@@ -1,0 +1,17 @@
+/* ROBOTO MONO */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+
+/* Importando otros archivos */
+@import url("login_y_register.css");
+@import url("todo.css");
+
+*, *::after, *::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Roboto Mono', monospace;
+}

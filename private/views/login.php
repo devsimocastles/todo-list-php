@@ -40,8 +40,8 @@
 
                 $_SESSION["login_error"] = null;
             ?>
-        </form>
         <h3>¿No tienes cuenta? <a href="<?= base_location()."/register" ?>" class="register-cta">Registrate Aquí</a></h3>
+        </form>
     </main>
 <?php
     mostrarFooter();

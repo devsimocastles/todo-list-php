@@ -1,0 +1,93 @@
+.todo-editor{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todo-editor header {
+    padding: 2em 0;
+    width: 100%;
+}
+
+.todo-editor header nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.todo-editor header nav .logo{
+    font-size: 30px;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+.todo-editor header nav .links{
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    width: 20%;
+}
+
+.todo-editor header nav .links li a{
+    color: #ADB5BD;
+    text-decoration: none;
+}
+
+.todo-editor header nav .links li a:hover{
+    color: #495057;
+    text-decoration: underline;
+}
+
+.todo-editor main {
+    height: 80vh;
+}
+
+
+.todo-editor main .create-task-form{
+    margin-bottom: 3em;
+}
+
+.todo-editor main .create-task-form label{
+    font-size: 20px;
+}
+
+
+.todo-editor main .create-task-form input[type="text"]{
+    padding: 1em 2em;
+    font-family: "Roboto Mono", monospace;
+    margin: 1em 0;
+
+}   
+
+
+.todo-editor main .create-task-form input[type="submit"]{
+    padding: .5em 1em;
+    font-family: "Roboto Mono", monospace;
+}   
+
+.table-wrapper{
+    max-width: 1000px;
+    height: 400px;
+    overflow-y: auto;
+}
+
+.task-table{
+    height: 400px;
+}
+
+.task-table, tr, td, th{
+    border: 2px solid #495057;
+}
+
+td, th{
+    padding: 2em;
+}
+
+.scrollable {
+    max-height: 300px;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+}
