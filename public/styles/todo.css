@@ -1,5 +1,4 @@
 .todo-editor{
-    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -42,6 +41,7 @@
 
 .todo-editor main {
     height: 80vh;
+    margin-bottom: 10em;
 }
 
 
@@ -74,7 +74,7 @@
 }
 
 .task-table{
-    height: 400px;
+    height: 200px;
 }
 
 .task-table, tr, td, th{
@@ -85,8 +85,12 @@ td, th{
     padding: 2em;
 }
 
+td{
+    height: 100px;
+}
+
 .scrollable {
-    max-height: 300px;
+    max-height: 150px;
     margin: 0;
     padding: 0;
     overflow-y: auto;
