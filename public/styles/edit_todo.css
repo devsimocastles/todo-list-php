@@ -1,0 +1,39 @@
+.edit-task{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-task h1{
+       padding: 1.5em 0;
+       text-align: center;
+}
+
+.edit-task form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 200px;
+    height: 400px;
+}
+
+.edit-task form label{
+    text-align: center;
+}
+
+.edit-task form label input, .edit-task form label textarea {
+    padding: 1em;
+    margin-top: 1em;
+    resize: vertical;
+    font-family: "Roboto Mono", monospace;
+}
+
+.edit-task form label{
+    margin: 1em 0;
+}
+
+.edit-task form input[type="submit"]{
+    padding: 1em;
+    font-family: "Roboto Mono", monospace;
+}

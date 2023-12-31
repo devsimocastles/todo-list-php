@@ -40,10 +40,11 @@ mostrarHeader("ToDo Editor | ToDo App", "todo-editor");
                 <input type="submit" value="Crear Tarea">
             </label>
             <?php
-            if (isset($_SESSION["create_error"]) && $_SESSION["create_error"] == "empty_field") {
-                print_error("El campo no puede estar vacío");
-                $_SESSION["create_error"] = null;
+            if (isset($_SESSION["create_error"])) {
+                if ($_SESSION["create_error"] == "empty_field") print_error("El campo no puede estar vacío");
+                if ($_SESSION["create_error"] == "already_exists") print_error("Ya existe una tarea con este nombre");
             }
+            $_SESSION["create_error"] = null;
             ?>
         </form>
         <!------------------------------------------------------------------------------------>

@@ -5,6 +5,7 @@
 /* Importando otros archivos */
 @import url("login_y_register.css");
 @import url("todo.css");
+@import url("edit_todo.css");
 
 *, *::after, *::before{
     margin: 0;

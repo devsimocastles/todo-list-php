@@ -13,13 +13,25 @@ $user_id = $_SESSION["user_id"];
 /// CREAR TAREA ////////////////////////////////////////////////////////////////////
 
 if ($_POST && isset($_POST["action"]) && $_POST["action"] == "create") {
-    $new_task_name = htmlspecialchars($_POST["task_name"]);  
+    $new_task_name = htmlspecialchars($_POST["task_name"]); 
+    
+    $new_task_exist = "SELECT * from tarea where nombre = '$new_task_name'";
 
+    // si el nombre de la nueva tarea está vacío
     if ($new_task_name == "") {
         $_SESSION["create_error"] = "empty_field";
         header("Location: ".base_location()."/todo");
         exit();
     }
+
+    // si ya hay una tarea con el nombre con el que se intenta crear otra
+    if ($conexion->query($new_task_exist)->rowCount() > 0) {
+        $_SESSION["create_error"] = "already_exists";
+        header("Location: ".base_location()."/todo");
+        exit();
+    }
+
+    
 
     $sql = "INSERT INTO tarea (nombre, completada, id_usuario,descripcion) VALUES ('$new_task_name', '0',".$user_id.",'')";
     $query=$conexion->query($sql);
@@ -55,8 +67,8 @@ if ($operation == "update") {
     $task_data = $conexion->query($get_task_data)->fetch(PDO::FETCH_ASSOC);
 
 ?>
+    <main class="edit-task">
     <h1>Editar Tarea</h1>
-
     <form action="edit-task.php" method="post">
         <label >Nombre tarea
             <input type="text" name="task_name" value="<?= $task_data["nombre"]?>">
@@ -75,6 +87,7 @@ if ($operation == "update") {
         ?>
     <input type="submit" value="Editar Tarea!">
     </form>
+    </main>
 <?php 
     mostrarFooter();
 }
